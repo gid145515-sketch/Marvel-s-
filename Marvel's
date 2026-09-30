@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Marvel MCU Movie Marathon</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at top, #401010 0%, #120000 35%, #050505 75%);
+    color:white;
+    min-height:100vh;
+    padding:25px 12px 50px;
+}
+
+/* TOP */
+.hero{
+    text-align:center;
+    padding:35px 15px;
+    border:2px solid #e62429;
+    border-radius:25px;
+    max-width:900px;
+    margin:auto;
+    background:linear-gradient(145deg,#220000,#080808);
+    box-shadow:0 0 30px rgba(230,36,41,.45);
+}
+
+.hero h1{
+    font-size:clamp(30px,7vw,65px);
+    letter-spacing:4px;
+    color:#e62429;
+    text-shadow:0 0 15px #e62429;
+}
+
+.hero h2{
+    margin-top:10px;
+    font-size:18px;
+    color:#ddd;
+    letter-spacing:2px;
+}
+
+.hero p{
+    margin-top:15px;
+    color:#aaa;
+}
+
+/* ARC REACTOR */
+.arc{
+    width:75px;
+    height:75px;
+    margin:25px auto 0;
+    border:5px solid #7deaff;
+    border-radius:50%;
+    box-shadow:
+        0 0 10px #7deaff,
+        0 0 30px #00c8ff,
+        inset 0 0 20px #00c8ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    animation:pulse 2s infinite;
+}
+
+.arc::after{
+    content:"";
+    width:25px;
+    height:25px;
+    background:#fff;
+    border-radius:50%;
+    box-shadow:0 0 20px #00c8ff;
+}
+
+@keyframes pulse{
+    50%{
+        transform:scale(1.08);
+    }
+}
+
+/* PROGRESS */
+.progress-box{
+    max-width:900px;
+    margin:25px auto;
+    padding:20px;
+    background:#111;
+    border:1px solid #333;
+    border-radius:18px;
+    text-align:center;
+}
+
+.progress-text{
+    font-size:18px;
+    margin-bottom:12px;
+}
+
+.progress-bar{
+    height:14px;
+    background:#292929;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    width:0%;
+    height:100%;
+    background:linear-gradient(90deg,#e62429,#ffb000);
+    transition:.4s;
+}
+
+/* MOVIE LIST */
+.movie-list{
+    max-width:900px;
+    margin:auto;
+}
+
+.movie{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin:12px 0;
+    padding:15px;
+    background:linear-gradient(90deg,#151515,#090909);
+    border:1px solid #292929;
+    border-left:5px solid #e62429;
+    border-radius:15px;
+    transition:.25s;
+}
+
+.movie:hover{
+    transform:translateX(6px);
+    border-color:#e62429;
+    box-shadow:0 0 18px rgba(230,36,41,.25);
+}
+
+.movie-number{
+    min-width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#e62429;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    box-shadow:0 0 12px rgba(230,36,41,.5);
+}
+
+.movie-info{
+    flex:1;
+}
+
+.movie-title{
+    font-size:17px;
+    font-weight:bold;
+}
+
+.movie-year{
+    color:#999;
+    margin-top:5px;
+    font-size:14px;
+}
+
+.movie input{
+    width:22px;
+    height:22px;
+    accent-color:#e62429;
+    cursor:pointer;
+}
+
+/* CHECKED */
+.movie:has(input:checked){
+    opacity:.55;
+    border-left-color:#777;
+}
+
+.movie:has(input:checked) .movie-title{
+    text-decoration:line-through;
+}
+
+/* FOOTER */
+.footer{
+    max-width:900px;
+    margin:35px auto 0;
+    text-align:center;
+    color:#777;
+    line-height:1.7;
+}
+
+.footer strong{
+    color:#e62429;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+    body{
+        padding:15px 8px 35px;
+    }
+
+    .hero{
+        padding:28px 10px;
+    }
+
+    .movie{
+        padding:12px;
+    }
+
+    .movie-title{
+        font-size:15px;
+    }
+
+    .movie-number{
+        min-width:36px;
+        height:36px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+
+    <h1>MARVEL</h1>
+
+    <h2>MCU MOVIE MARATHON</h2>
+
+    <div class="arc"></div>
+
+    <p>
+        38 Movies • Release Order • Your Ultimate MCU Journey
+    </p>
+
+</section>
+
+
+<div class="progress-box">
+
+    <div class="progress-text">
+        Movies Watched: <strong id="count">0</strong> / 38
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress"></div>
+    </div>
+
+</div>
+
+
+<div class="movie-list">
+
+<!-- 1 -->
+<div class="movie">
+    <div class="movie-number">1</div>
+    <div class="movie-info">
+        <div class="movie-title">Iron Man</div>
+        <div class="movie-year">2008</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 2 -->
+<div class="movie">
+    <div class="movie-number">2</div>
+    <div class="movie-info">
+        <div class="movie-title">The Incredible Hulk</div>
+        <div class="movie-year">2008</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 3 -->
+<div class="movie">
+    <div class="movie-number">3</div>
+    <div class="movie-info">
+        <div class="movie-title">Iron Man 2</div>
+        <div class="movie-year">2010</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 4 -->
+<div class="movie">
+    <div class="movie-number">4</div>
+    <div class="movie-info">
+        <div class="movie-title">Thor</div>
+        <div class="movie-year">2011</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 5 -->
+<div class="movie">
+    <div class="movie-number">5</div>
+    <div class="movie-info">
+        <div class="movie-title">Captain America: The First Avenger</div>
+        <div class="movie-year">2011</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 6 -->
+<div class="movie">
+    <div class="movie-number">6</div>
+    <div class="movie-info">
+        <div class="movie-title">The Avengers</div>
+        <div class="movie-year">2012</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 7 -->
+<div class="movie">
+    <div class="movie-number">7</div>
+    <div class="movie-info">
+        <div class="movie-title">Iron Man 3</div>
+        <div class="movie-year">2013</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 8 -->
+<div class="movie">
+    <div class="movie-number">8</div>
+    <div class="movie-info">
+        <div class="movie-title">Thor: The Dark World</div>
+        <div class="movie-year">2013</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 9 -->
+<div class="movie">
+    <div class="movie-number">9</div>
+    <div class="movie-info">
+        <div class="movie-title">Captain America: The Winter Soldier</div>
+        <div class="movie-year">2014</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 10 -->
+<div class="movie">
+    <div class="movie-number">10</div>
+    <div class="movie-info">
+        <div class="movie-title">Guardians of the Galaxy</div>
+        <div class="movie-year">2014</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 11 -->
+<div class="movie">
+    <div class="movie-number">11</div>
+    <div class="movie-info">
+        <div class="movie-title">Avengers: Age of Ultron</div>
+        <div class="movie-year">2015</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 12 -->
+<div class="movie">
+    <div class="movie-number">12</div>
+    <div class="movie-info">
+        <div class="movie-title">Ant-Man</div>
+        <div class="movie-year">2015</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 13 -->
+<div class="movie">
+    <div class="movie-number">13</div>
+    <div class="movie-info">
+        <div class="movie-title">Captain America: Civil War</div>
+        <div class="movie-year">2016</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 14 -->
+<div class="movie">
+    <div class="movie-number">14</div>
+    <div class="movie-info">
+        <div class="movie-title">Doctor Strange</div>
+        <div class="movie-year">2016</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 15 -->
+<div class="movie">
+    <div class="movie-number">15</div>
+    <div class="movie-info">
+        <div class="movie-title">Guardians of the Galaxy Vol. 2</div>
+        <div class="movie-year">2017</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 16 -->
+<div class="movie">
+    <div class="movie-number">16</div>
+    <div class="movie-info">
+        <div class="movie-title">Spider-Man: Homecoming</div>
+        <div class="movie-year">2017</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 17 -->
+<div class="movie">
+    <div class="movie-number">17</div>
+    <div class="movie-info">
+        <div class="movie-title">Thor: Ragnarok</div>
+        <div class="movie-year">2017</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 18 -->
+<div class="movie">
+    <div class="movie-number">18</div>
+    <div class="movie-info">
+        <div class="movie-title">Black Panther</div>
+        <div class="movie-year">2018</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 19 -->
+<div class="movie">
+    <div class="movie-number">19</div>
+    <div class="movie-info">
+        <div class="movie-title">Avengers: Infinity War</div>
+        <div class="movie-year">2018</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 20 -->
+<div class="movie">
+    <div class="movie-number">20</div>
+    <div class="movie-info">
+        <div class="movie-title">Ant-Man and the Wasp</div>
+        <div class="movie-year">2018</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 21 -->
+<div class="movie">
+    <div class="movie-number">21</div>
+    <div class="movie-info">
+        <div class="movie-title">Captain Marvel</div>
+        <div class="movie-year">2019</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 22 -->
+<div class="movie">
+    <div class="movie-number">22</div>
+    <div class="movie-info">
+        <div class="movie-title">Avengers: Endgame</div>
+        <div class="movie-year">2019</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 23 -->
+<div class="movie">
+    <div class="movie-number">23</div>
+    <div class="movie-info">
+        <div class="movie-title">Spider-Man: Far From Home</div>
+        <div class="movie-year">2019</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 24 -->
+<div class="movie">
+    <div class="movie-number">24</div>
+    <div class="movie-info">
+        <div class="movie-title">Black Widow</div>
+        <div class="movie-year">2021</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 25 -->
+<div class="movie">
+    <div class="movie-number">25</div>
+    <div class="movie-info">
+        <div class="movie-title">Shang-Chi and the Legend of the Ten Rings</div>
+        <div class="movie-year">2021</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 26 -->
+<div class="movie">
+    <div class="movie-number">26</div>
+    <div class="movie-info">
+        <div class="movie-title">Eternals</div>
+        <div class="movie-year">2021</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 27 -->
+<div class="movie">
+    <div class="movie-number">27</div>
+    <div class="movie-info">
+        <div class="movie-title">Spider-Man: No Way Home</div>
+        <div class="movie-year">2021</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 28 -->
+<div class="movie">
+    <div class="movie-number">28</div>
+    <div class="movie-info">
+        <div class="movie-title">Doctor Strange in the Multiverse of Madness</div>
+        <div class="movie-year">2022</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 29 -->
+<div class="movie">
+    <div class="movie-number">29</div>
+    <div class="movie-info">
+        <div class="movie-title">Thor: Love and Thunder</div>
+        <div class="movie-year">2022</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 30 -->
+<div class="movie">
+    <div class="movie-number">30</div>
+    <div class="movie-info">
+        <div class="movie-title">Black Panther: Wakanda Forever</div>
+        <div class="movie-year">2022</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 31 -->
+<div class="movie">
+    <div class="movie-number">31</div>
+    <div class="movie-info">
+        <div class="movie-title">Ant-Man and the Wasp: Quantumania</div>
+        <div class="movie-year">2023</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 32 -->
+<div class="movie">
+    <div class="movie-number">32</div>
+    <div class="movie-info">
+        <div class="movie-title">Guardians of the Galaxy Vol. 3</div>
+        <div class="movie-year">2023</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 33 -->
+<div class="movie">
+    <div class="movie-number">33</div>
+    <div class="movie-info">
+        <div class="movie-title">The Marvels</div>
+        <div class="movie-year">2023</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 34 -->
+<div class="movie">
+    <div class="movie-number">34</div>
+    <div class="movie-info">
+        <div class="movie-title">Deadpool &amp; Wolverine</div>
+        <div class="movie-year">2024</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 35 -->
+<div class="movie">
+    <div class="movie-number">35</div>
+    <div class="movie-info">
+        <div class="movie-title">Captain America: Brave New World</div>
+        <div class="movie-year">2025</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 36 -->
+<div class="movie">
+    <div class="movie-number">36</div>
+    <div class="movie-info">
+        <div class="movie-title">Thunderbolts*</div>
+        <div class="movie-year">2025</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 37 -->
+<div class="movie">
+    <div class="movie-number">37</div>
+    <div class="movie-info">
+        <div class="movie-title">The Fantastic Four: First Steps</div>
+        <div class="movie-year">2025</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+<!-- 38 -->
+<div class="movie">
+    <div class="movie-number">38</div>
+    <div class="movie-info">
+        <div class="movie-title">Spider-Man: Brand New Day</div>
+        <div class="movie-year">2026</div>
+    </div>
+    <input type="checkbox">
+</div>
+
+</div>
+
+
+<div class="footer">
+    <p>⚡ <strong>MCU MARATHON</strong> ⚡</p>
+    <p>From Iron Man to Spider-Man: Brand New Day</p>
+    <p>Check them off as you enter the Marvel Universe.</p>
+</div>
+
+
+<script>
+
+const checkboxes = document.querySelectorAll(
+    '.movie input[type="checkbox"]'
+);
+
+const count = document.getElementById("count");
+const progress = document.getElementById("progress");
+
+function updateProgress(){
+
+    let watched = 0;
+
+    checkboxes.forEach((box, index) => {
+
+        if(box.checked){
+            watched++;
+            localStorage.setItem(
+                "marvel_" + index,
+                "true"
+            );
+        }else{
+            localStorage.removeItem(
+                "marvel_" + index
+            );
+        }
+
+    });
+
+    count.textContent = watched;
+
+    let percentage = (watched / checkboxes.length) * 100;
+
+    progress.style.width = percentage + "%";
+}
+
+
+checkboxes.forEach((box,index)=>{
+
+    if(localStorage.getItem("marvel_" + index) === "true"){
+        box.checked = true;
+    }
+
+    box.addEventListener("change",updateProgress);
+
+});
+
+updateProgress();
+
+</script>
+
+</body>
+</html>
